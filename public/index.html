@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Scrapely</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Carattere&family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+<!-- ====================
+         NAVBAR
+===================== -->
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="images/logo.svg" alt="Scrapely">
+        </a>
+
+        <div class="nav-buttons">
+            <button id="openLogin" class="login-btn">Login</button>
+
+            <button id="openSignup" class="start-btn">
+                Get Started ✨
+            </button>
+        </div>
+
+    </nav>
+
+<!-- ===================
+     HERO SECTION
+=================== -->
+    <main class="hero">
+
+        <div class="hero-text">
+
+            <h1>
+                Keep every
+                <span>Little moment</span>
+            </h1>
+
+            <p>
+                Create beautiful digital scrapbooks filled with photos,
+                journal entries, stickers, and memories you'll always treasure.
+            </p>
+
+            <button id="openScrapbook" class="hero-btn">
+                Start Creating
+            </button>
+
+        </div>
+
+        <div class="hero-image">
+            <img src="images/scrapbook.svg" class="scrapbook" alt="scrapbook">
+        </div>
+
+    </main>
+
+    <!-- ======AUTH MODAL============ -->
+
+<!-- ============
+       LOGIN MODAL
+================ -->
+    <div id="loginModal" class="modal-overlay">
+
+        <div class="auth-modal">
+            <div class="modal-header">
+                <img src="images/logo.svg" alt="Scrapely" class="modal-logo">
+                <button id="closeLogin" class="close-btn">&times;</button>
+            </div>
+
+            <h3 class="modal-title">Welcome Back</h3>
+            <p class="modal-subtitle">
+                Continue your scrapbook journey
+            </p>
+
+            <form id="loginForm" class="login-form">
+                <input id="loginEmail" type="email" placeholder="Email" required>
+                <input id="loginPassword" type="password" placeholder="Password" required>
+                <div class="forgot-password">
+                    <a href="#">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="modal-btn">
+                    Login
+                </button>
+            </form>
+
+            <div class="modal-footer">
+                <p>Don't have an account?</p>
+                <a href="#" id="showSignup">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+
+<!-- =================
+     SIGNUP MODAL
+==================== -->
+    <div id="signupModal" class="modal-overlay">
+
+        <div class="auth-modal">
+            <div class="modal-header">
+                <img src="images/logo.svg" alt="Scrapely" class="modal-logo">
+                <button id="closeSignup" class="close-btn">&times;</button>
+            </div>
+
+            <h3 class="modal-title">Create Account</h3>
+            <p class="modal-subtitle">
+                Create an account to start preserving your memories.
+            </p>
+
+            <form id="signupForm" class="login-form">
+                <input id="signupUsername" type="text" placeholder="Full Name" required>
+                <input id="signupEmail" type="email" placeholder="Email" required>
+                <input id="signupPassword" type="password" placeholder="Password" required>
+                <input id="confirmPassword" type="password" placeholder="Confirm Password" required>
+                <button type="submit" class="modal-btn">
+                    Sign Up
+                </button>
+            </form>
+
+            <div class="modal-footer">
+                <p>Already have an account?</p>
+                <a href="#" id="showLogin">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>

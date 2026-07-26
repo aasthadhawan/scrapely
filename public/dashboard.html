@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Carattere&family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+</head>
+
+<body>
+<!-- =================
+   DASHBOARD HEADER
+ ================== -->
+    <header class="dashboard-header">
+        <div class="logo">
+            <img src="images/logo.svg" alt="Scrapely">
+        </div>
+        <div class="dashboard-user">
+            <p>Hello, User🩷 </p>
+            <button class="logout-btn">
+                Logout
+            </button>
+        </div>
+    </header>
+
+<!-- =================
+     DASHBOARD CONTENT
+====================== -->
+    <main class="dashboard">
+        <div class="dashboard-content">
+            <section id="dashboardTop" class="dashboard-top">
+                <div class="dashboard-title">
+                    <h1>My Scrapbooks</h1>
+                    <p>All your memories in one place.</p>
+                </div>
+                <button id="newScrapbookBtn" class="new-scrapbook-btn">
+                    + Create New Scrapbook
+                </button>
+            </section>
+
+            <!-- ===============
+                  EMPTY STATE
+            ================== -->
+            <section id="emptyState" class="empty-state">
+                <img src="images/empty-scrapbook.svg" alt="Empty Scrapbook">
+                <h2>Your memory shelf is empty.</h2>
+                <p>Create your first scrapbook to begin preserving your memories.</p>
+                <button id="openScrapbook" class="create-btn">
+                    + Create your First Scrapbook
+                </button>
+            </section>
+
+            <!-- ================
+                FILLED STATE
+            ==================== -->
+            <section id="filledDashboard" class="filled-dashboard">
+                <div id="scrapbooksGrid" class="scrapbooks-grid">
+                </div>
+            </section>
+        </div>
+    </main>
+
+
+     <!-- ==================
+          SCRAPBOOK MODAL
+    ==================== -->
+    <div id="scrapbookModal" class="scrapbook-modal-overlay">
+        <div class="scrapbook-modal">
+            <div class="modal-header">
+                <button id="closeScrapbook" class="close-scrapbook">&times;</button>
+                <button id="saveScrapbook" class="save-btn">
+                    Save
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="modal-left">
+                    <label for="scrapbookTitle">Title:</label>
+                    <input type="text" id="scrapbookTitle" maxlength="50" required>
+                    <div class="image-section">
+                        <div class="image-upload-box">
+                            <input type="file" id="coverImage" accept="image/*" hidden>
+                            <div id="uploadPlaceholder" class="upload-placeholder">
+                                <span class="plus">+</span>
+                                <p>Add an image</p>
+                            </div>
+                            <div id="stickersLayer" class="stickers-layer"></div>
+                        </div>
+                        <button id="changeImageBtn" class="change-image-btn">
+                            Change Image
+                        </button>
+                        <label for="description">Description (optional)</label>
+                        <textarea id="description" placeholder="Write about this memory..." maxlength="300"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-right">
+                    <div class="stickers-card">
+                        <h4>Stickers</h4>
+                        <div class="sticker-tabs">
+                            <span class="active" data-category="hearts">💗</span>
+                            <span data-category="sparkles">✨</span>
+                            <span data-category="rainbow">🌈</span>
+                            <span data-category="smileys">😊</span>
+                            <span data-category="animals">🐾</span>
+                        </div>
+                        <div class="sticker-grid"></div>
+                        <div class="colors-card">
+                            <h4>Frame Color</h4>
+
+                            <div class="color-options">
+                                <span class="color pink"></span>
+                                <span class="color blue"></span>
+                                <span class="color red"></span>
+                                <span class="color purple"></span>
+                                <span class="color orange"></span>
+                                <span class="color yellow"></span>
+                                <span class="color green"></span>
+                            </div>
+                        </div>
+                        <div class="pages-card">
+                            <h4>Pages</h4>
+                            <div class="pages-content">
+                                <div class="pages-left">
+                                    <div class="pages-header">
+                                        <button id="prevPageBtn" class="page-arrow">&#8592;</button>
+                                        <span id="pageCounter">Page 1 of 1</span>
+                                        <button id="nextPageBtn" class="page-arrow">&#8594;</button>
+                                    </div>
+                                    <div id="pagePreview" class="page-preview"></div>
+                                </div>
+                                <div class="pages-right">
+                                    <button id="addPageBtn" class="add-page-btn">
+                                        + Add Page
+                                    </button>
+                                    <button id="deletePageBtn" class="delete-page-btn">
+                                        🗑 Delete Page
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>            
+
+
+    <!--- JavaScript --->
+    <script src="js/script.js"></script>    
+    <script src="js/scrapbook.js"></script>  
+
+</body>
+
+</html>

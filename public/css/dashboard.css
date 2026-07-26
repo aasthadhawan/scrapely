@@ -1,0 +1,962 @@
+/* ==========================
+        RESET
+========================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ==========================
+        BODY
+========================== */
+
+body {
+    background:
+        radial-gradient(circle at 50% 35%,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(255, 255, 255, .95) 18%,
+            #fff9f4 45%,
+            #fdf2e5 75%,
+            #f8ebda 100%);
+    overflow-x: hidden;
+    font-family: "Playfair Display", serif;
+}
+
+/* ==========================
+        DASHBOARD HEADER
+========================== */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    border-bottom: 1px solid #ffb2bf98;
+}
+
+.logo img {
+    width: 200px;
+    display: block;
+}
+
+.dashboard-user {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.dashboard-user p {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 25px;
+    font-weight: 600;
+    color: #FC9DAD;
+}
+
+.logout-btn {
+    background: rgb(253, 251, 246);
+    border: 1.5px solid #FC9DAD;
+    border-radius: 12px;
+    padding: 10px 22px;
+    color: #FC9DAD;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 20px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.logout-btn:hover {
+    background: #FC9DAD;
+    color: white;
+}
+
+.dashboard-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 10px 30px 20px;
+}
+
+.dashboard-title {
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-title h1 {
+    font-family: "Playfair Display", serif;
+    font-size: 40px;
+    font-weight: 400;
+    color: #212020;
+}
+
+.dashboard-title p {
+    margin-top: 10px;
+    font-family: "Playfair Display", serif;
+    font-size: 22px;
+    font-style: italic;
+    color: #5a5a5a;
+    line-height: 1.5;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 86px);
+}
+
+.dashboard-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ==========================
+        EMPTY STATE
+========================== */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex: 1;
+    padding: 20px;
+}
+
+.empty-state img {
+    width: 380px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.empty-state h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 30px;
+    font-weight: 400;
+    color: #2E2D2D;
+    margin-bottom: 15px;
+}
+
+.empty-state p {
+    font-family: "Playfair Display", serif;
+    font-size: 20px;
+    color: #3C3C3C;
+    margin-bottom: 20px;
+}
+
+.create-btn {
+    background: #fda5b3;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    padding: 16px 36px;
+    box-shadow: 2px 10px 11px rgba(0, 0, 0, 0.156);
+    font-family: "Playfair Display", serif;
+    font-size: 22px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.create-btn:hover {
+    background: #f87da8;
+    box-shadow: 2px 10px 11px rgba(255, 149, 172, 0.4);
+}
+
+
+/* ==========================
+      NEW SCRAPBOOK BTN
+========================== */
+.new-scrapbook-btn {
+    margin-right: 20px;
+    background: #F78FA7;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    padding: 16px 36px;
+    font-size: 28px;
+    font-family: "Cormorant Garamond", serif;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: 0.3s;
+}
+
+.new-scrapbook-btn:hover {
+    background-color: #fb6a93;
+    box-shadow: 0 10px 20px rgba(255, 149, 172, .25);
+}
+
+
+/* ==========================
+        RESPONSIVE
+========================== */
+@media (max-width: 768px) {
+    .dashboard-header {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .dashboard-user {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .dashboard-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .dashboard-title h1 {
+        font-size: 32px;
+    }
+
+    .dashboard-title p {
+        font-size: 16px;
+    }
+
+    .empty-state {
+        padding: 0 20px;
+    }
+
+    .empty-state img {
+        width: 280px;
+        margin-top: 0;
+    }
+
+    .empty-state h2 {
+        font-size: 24px;
+    }
+
+    .empty-state p {
+        font-size: 18px;
+    }
+
+    .create-btn {
+        width: calc(100% - 40px);
+        max-width: 340px;
+        font-size: 18px;
+        padding: 15px 18px;
+    }
+
+    .new-scrapbook-btn {
+        width: 100%;
+        margin-right: 0;
+        padding: 14px 28px;
+        align-self: center;
+        font-size: 24px;
+        width: fit-content;
+        margin: 20px auto 0;
+    }
+
+    .scrapbooks-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .scrapbook-card {
+        width: 100%;
+    }
+
+
+}
+
+
+@media (max-width: 480px) {
+
+    .logo img {
+        width: 170px;
+    }
+
+    .dashboard-user p {
+        font-size: 22px;
+    }
+
+    .logout-btn {
+        font-size: 17px;
+    }
+
+    .dashboard-title h1 {
+        font-size: 28px;
+    }
+
+    .dashboard-title p {
+        font-size: 14px;
+    }
+
+    .empty-state img {
+        width: 220px;
+    }
+
+    .empty-state h2 {
+        font-size: 20px;
+    }
+
+    .empty-state p {
+        font-size: 15px;
+    }
+
+    .create-btn {
+        width: calc(100% - 40px);
+        max-width: 340px;
+        font-size: 15px;
+        padding: 12px 17px;
+    }
+
+    .new-scrapbook-btn {
+        align-self: center;
+        font-size: 22px;
+    }
+
+}
+
+
+
+
+/* ==========================
+        SCRAPBOOK MODAL
+========================== */
+.scrapbook-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.scrapbook-modal {
+    width: 90%;
+    max-width: 1100px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #FFF9F0;
+    border-radius: 18px;
+    padding: 14px 30px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .15);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+}
+
+.modal-content {
+    display: flex;
+    gap: 28px;
+}
+
+.modal-left {
+    flex: 1;
+}
+
+.modal-right {
+    flex: 1;
+    margin-top: 30px;
+}
+
+.close-scrapbook {
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: 200;
+    color: #2E2D2D;
+    cursor: pointer;
+    line-height: 0;
+}
+
+.save-btn {
+    background: #fca3b2;
+    color: #2E2D2D;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 25px;
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.save-btn:hover {
+    background: #f87da8;
+}
+
+.modal-left label {
+    display: block;
+    margin-bottom: 12px;
+    font-family: "Playfair Display", serif;
+    font-size: 18px;
+    color: #2E2D2D;
+}
+
+.modal-left input {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    border: 1.5px solid #FC9DAD;
+    border-radius: 8px;
+    background: white;
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+    outline: none;
+}
+
+.modal-left textarea {
+    width: 100%;
+    height: 120px;
+    margin-top: 10px;
+    padding: 8px 8px;
+    border: 1.5px solid #FC9DAD;
+    border-radius: 8px;
+    background: white;
+    resize: none;
+    outline: none;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #2E2D2D;
+}
+
+.modal-left textarea::placeholder {
+    color: #b9b9b9;
+}
+
+.modal-left label[for="description"] {
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+
+/* ==========================
+        IMAGE UPLOAD
+========================== */
+.image-upload-box {
+    width: 100%;
+    height: 260px;
+    margin-top: 15px;
+    border: 2px solid #f9a3b2;
+    border-radius: 8px;
+    background: #fcf5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.upload-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.upload-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.plus {
+    font-size: 55px;
+    font-weight: 200;
+    color: #555;
+    line-height: 1;
+}
+
+.upload-placeholder p {
+    font-family: "Playfair Display", serif;
+    font-size: 22px;
+    color: #2E2D2D;
+}
+
+.image-upload-box {
+    position: relative;
+}
+
+.change-image-btn {
+    display: block;
+    margin: 8px auto 0;
+    padding: 6px 16px;
+    background: white;
+    border: 1px solid #d2d1d1;
+    border-radius: 6px;
+    font-family: "Poppins", serif;
+    font-size: 14px;
+    color: #686767;
+    cursor: pointer;
+}
+
+.image-section {
+    width: 100%;
+}
+
+/* ==========================
+        STICKERS
+========================== */
+.stickers-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.page-sticker {
+    position: absolute;
+    cursor: grab;
+    -webkit-user-select: none;
+    user-select: none;
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.sticker-emoji {
+    font-size: 30px;
+    display: block;
+}
+
+.delete-sticker {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 18px;
+    height: 18px;
+    border: none;
+    border-radius: 50%;
+    background: #ff5f7e;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    display: none;
+}
+
+.page-sticker:hover .delete-sticker {
+    display: block;
+}
+
+
+/* ==========================
+        STICKERS
+========================== */
+.stickers-card {
+    height: 300px;
+    width: auto;
+    background: white;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.stickers-card h4 {
+    font-family: "Playfair Display", serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: #2E2D2D;
+    margin-bottom: 12px;
+}
+
+.sticker-tabs {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px 8px;
+    margin-bottom: 8px;
+}
+.sticker-tabs span {
+    font-size: 20px;
+    cursor: pointer;
+}
+.sticker-tabs span:hover {
+    transform: scale(1.5);
+}
+.sticker-tabs span.active {
+    padding: 5px;
+    background: #fcf4e7;
+    border: 1px solid rgb(252, 182, 218);
+    border-radius: 6px;
+    transform: scale(1.15);
+    box-shadow: 5px 5px 15px 0px rgb(255 173 233 / 40%);
+}
+.sticker-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 10px;
+    margin-top: 10px;
+    padding: 8px;
+    background-color: #f8e1e8a9;
+    border-radius: 8px;
+}
+.sticker-grid span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    margin: auto;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background .2s, transform .2s;
+}
+.sticker-grid span:hover {
+    background: #ffffff;
+    transform: scale(1.1);
+}
+
+
+/* ==========================
+        FRAME COLORS
+========================== */
+.colors-card {
+    margin-top: 20px;
+    background: white;
+    border-radius: 8px;
+    padding: 12px;
+}
+.colors-card h4 {
+    font-family: "Playfair Display", serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: #2E2D2D;
+    margin-bottom: 12px;
+}
+.color-options {
+    display: flex;
+    justify-content: space-around;
+    gap: 12px;
+    margin: 5px;
+}
+.color {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: .2s;
+    transition: all 0.2s ease;
+}
+.color:hover {
+    transform: scale(1.15);
+    border-color: #919090ab;
+}
+.color.active {
+    transform: scale(1.2);
+    border: 2px solid rgb(254, 178, 222);
+}
+.pink {
+    background: #ff98d4;
+}
+.blue {
+    background: #99dbff;
+}
+.red {
+    background: #fc3f81c1;
+}
+.purple {
+    background: #e6adff;
+}
+.orange {
+    background: #fcb4a8;
+}
+.yellow {
+    background: #fbeaac;
+}
+.green {
+    background: #bbfab3;
+}
+
+
+/* ==========================
+        PAGES
+========================== */
+.pages-card {
+    margin-top: 20px;
+    background: white;
+    border-radius: 8px;
+    padding: 10px;
+}
+.pages-card h4 {
+    font-family: "Playfair Display", serif;
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 8px;
+}
+.pages-header {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-bottom: 8px;
+}
+.page-arrow {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #444;
+}
+.pages-header span {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+}
+.add-page-btn {
+    padding: 6px 14px;
+    border: 1.5px solid #FC9DAD;
+    border-radius: 20px;
+    background: white;
+    color: #FC9DAD;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    transition: .2s;
+}
+.add-page-btn:hover {
+    transform: translateY(-2px);
+    background-color: #fae4e8;
+    color: #f45c83;
+}
+.delete-page-btn {
+    background: none;
+    border: none;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #FC9DAD;
+    cursor: pointer;
+    transition: .2s;
+}
+.delete-page-btn:hover {
+    color: #f45c83;
+}
+.page-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 100px;
+    background: #F8D8DF;
+    border-radius: 8px;
+}
+.page-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+.pages-content {
+    display: flex;
+}
+.pages-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.pages-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+}
+
+
+/* ==========================
+        RESPONSIVE
+========================== */
+@media (max-width: 768px) {
+
+    .modal-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .modal-left,
+    .modal-right {
+        width: 100%;
+    }
+
+    .image-placeholder {
+        width: 100%;
+    }
+
+    .title-input,
+    .description {
+        width: 100%;
+    }
+
+    .stickers-card,
+    .colors-card,
+    .pages-card {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .pages-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .pages-right {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .pages-left {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pages-header {
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .sticker-tabs {
+        display: flex;
+        gap: 8px;
+        justify-content: space-around;
+    }
+
+    .sticker-tabs span {
+        font-size: 18px;
+    }
+
+    .sticker-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+    }
+
+    .sticker-grid span {
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .color-options {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .color {
+        width: 22px;
+        height: 22px;
+    }
+
+}
+
+
+/* ==========================
+        SCRAPBOOK CARDS
+========================== */
+.scrapbooks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 280px));
+    gap: 26px;
+    margin-top: 10px;
+    justify-content: space-evenly;
+}
+
+.scrapbook-card {
+    display: flex;
+    flex-direction: column;
+    height: 320px;
+    width: 100%;
+    max-width: 260px;
+    border-radius: 28px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.scrapbook-card:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, .12);
+}
+
+.scrapbook-cover {
+    height: 200px;
+    background: #F5A2C5;
+    overflow: hidden;
+}
+
+.scrapbook-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .4s ease;
+
+}
+
+.scrapbook-card:hover .scrapbook-cover img {
+
+    transform: scale(1.08);
+}
+
+.scrapbook-info {
+    flex: 1;
+    background: #FCE7EF;
+    padding: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.scrapbook-text h3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 48px;
+    font-family: "Playfair Display", serif;
+    font-size: 25px;
+    font-weight: 400;
+    margin-bottom: 6px;
+}
+
+.scrapbook-text p {
+    font-size: 15px;
+    color: #777;
+}
+
+.card-actions {
+    display: flex;
+    gap: 25px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: .25s;
+}
+
+.icon-btn:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 1px #f9a3b2;
+}
+
+
+#dashboardTop {
+    display: none;
+}

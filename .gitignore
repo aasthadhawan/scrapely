@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Local uploads (temporary during development)
+uploads/
+
+# macOS
+.DS_Store
+
+# Logs
+npm-debug.log*
