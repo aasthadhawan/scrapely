@@ -11,7 +11,6 @@ const {
 
 const upload = require("../config/multer");
 
-// Create a new scrapbook
 router.post(
     "/",
     upload.array("coverImages"),

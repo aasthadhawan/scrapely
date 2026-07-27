@@ -1,9 +1,11 @@
-const fs = require("fs");
-const path = require("path");
+const cloudinary = require("../config/cloudinary");
 const Scrapbook = require("../models/Scrapbook");
 
-const createScrapbook = async (req, res) => {
 
+// =============================
+// CREATE SCRAPBOOK
+// =============================
+const createScrapbook = async (req, res) => {
     try {
         const { user, title } = req.body;
         const pages = JSON.parse(req.body.pages);
@@ -13,7 +15,6 @@ const createScrapbook = async (req, res) => {
                 message: "Missing required fields."
             });
         }
-        console.log("REQ.FILE =", req.file);
 
         const uploadedFiles = req.files || [];
         const imageIndexes = req.body.coverImageIndexes;
@@ -25,24 +26,16 @@ const createScrapbook = async (req, res) => {
             uploadedFiles.forEach((file, i) => {
                 const pageIndex = parseInt(indexes[i]);
                 if (!isNaN(pageIndex) && pages[pageIndex]) {
-                    pages[pageIndex].coverImage =
-                        "/uploads/" + file.filename;
+                    pages[pageIndex].coverImage = file.path;
                 }
             });
         }
-        console.log("PAGES BEFORE SAVE =", pages);
-        console.log("req.file:", req.file);
-        console.log("pages before save:", pages);
         const scrapbook = new Scrapbook({
             user,
             title,
             pages
         });
-        console.log(req.files);
-        console.log(req.body.coverImageIndexes);
-        console.log(pages);
         await scrapbook.save();
-        console.log("SAVED =", scrapbook);
         res.status(201).json({
             message: "Scrapbook saved successfully!",
             scrapbook
@@ -56,6 +49,9 @@ const createScrapbook = async (req, res) => {
 };
 
 
+// =============================
+// GET SCRAPBOOK
+// =============================
 const getScrapbooks = async (req, res) => {
     try {
         const { user } = req.query;
@@ -75,7 +71,9 @@ const getScrapbooks = async (req, res) => {
 };
 
 
-
+// =============================
+// DELETE SCRAPBOOK
+// =============================
 const deleteScrapbook = async (req, res) => {
     try {
         const { id } = req.params;
@@ -85,18 +83,17 @@ const deleteScrapbook = async (req, res) => {
                 message: "Scrapbook not found."
             });
         }
-        scrapbook.pages.forEach(page => {
+        for (const page of scrapbook.pages) {
             if (page.coverImage) {
-                const imagePath = path.join(
-                    __dirname,
-                    "..",
-                    page.coverImage
-                );
-                if (fs.existsSync(imagePath)) {
-                    fs.unlinkSync(imagePath);
-                }
+                const publicId = page.coverImage
+                    .split("/")
+                    .slice(-2)
+                    .join("/")
+                    .split(".")[0];
+
+                await cloudinary.uploader.destroy(publicId);
             }
-        });
+        }
         await Scrapbook.findByIdAndDelete(id);
         res.status(200).json({
             message: "Scrapbook deleted successfully."
@@ -110,11 +107,20 @@ const deleteScrapbook = async (req, res) => {
 };
 
 
+// =============================
+// UPDATE SCRAPBOOK
+// =============================
 const updateScrapbook = async (req, res) => {
     try {
         const { id } = req.params;
         const { title } = req.body;
         const pages = JSON.parse(req.body.pages);
+        const existingScrapbook = await Scrapbook.findById(id);
+        if (!existingScrapbook) {
+            return res.status(404).json({
+                message: "Scrapbook not found."
+            });
+        }
         const uploadedFiles = req.files || [];
         const imageIndexes = req.body.coverImageIndexes;
         if (uploadedFiles.length > 0) {
@@ -124,10 +130,26 @@ const updateScrapbook = async (req, res) => {
             uploadedFiles.forEach((file, i) => {
                 const pageIndex = parseInt(indexes[i]);
                 if (!isNaN(pageIndex) && pages[pageIndex]) {
-                    pages[pageIndex].coverImage =
-                        "/uploads/" + file.filename;
+                    pages[pageIndex].coverImage = file.path;
                 }
             });
+        }
+        const oldImages = existingScrapbook.pages
+            .map(page => page.coverImage)
+            .filter(Boolean);
+        const newImages = pages
+            .map(page => page.coverImage)
+            .filter(Boolean);
+        const deletedImages = oldImages.filter(
+            image => !newImages.includes(image)
+        );
+        for (const image of deletedImages) {
+            const publicId = image
+                .split("/")
+                .slice(-2)
+                .join("/")
+                .split(".")[0];
+            await cloudinary.uploader.destroy(publicId);
         }
         const scrapbook = await Scrapbook.findByIdAndUpdate(
             id,
@@ -136,14 +158,9 @@ const updateScrapbook = async (req, res) => {
                 pages
             },
             {
-                new: true
+                returnDocument: "after"
             }
         );
-        if (!scrapbook) {
-            return res.status(404).json({
-                message: "Scrapbook not found."
-            });
-        }
         res.status(200).json({
             message: "Scrapbook updated successfully!",
             scrapbook

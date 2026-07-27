@@ -1,9 +1,12 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const connectDB = require("./config/db");
-const scrapbookRoutes = require("./routes/scrapbookRoutes");
 
 dotenv.config();
+
+const connectDB = require("./config/db");
+const scrapbookRoutes = require("./routes/scrapbookRoutes");
+const cloudinary = require("./config/cloudinary");
+
 
 connectDB();
 
@@ -21,7 +24,7 @@ app.use("/", indexRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/scrapbooks", scrapbookRoutes);
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
 

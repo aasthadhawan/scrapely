@@ -1,17 +1,25 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
+
+// =============================
+// SIGN UP
+// =============================
 const signup = async (req, res) => {
     try {
         const { username, email, password } = req.body;
-
         // Check if all fields are provided
         if (!username || !email || !password) {
             return res.status(400).json({
                 message: "Please fill in all fields."
             });
         }
-
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email.trim())) {
+            return res.status(400).json({
+                message: "Please enter a valid email address."
+            });
+        }
         // Check if email already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -19,10 +27,8 @@ const signup = async (req, res) => {
                 message: "Email already registered."
             });
         }
-
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
-
         // Create new user
         const user = new User({
             username,
@@ -42,6 +48,9 @@ const signup = async (req, res) => {
 };
 
 
+// =============================
+// LOGIN
+// =============================
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -50,7 +59,6 @@ const login = async (req, res) => {
                 message: "Please enter both email and password."
             });
         }
-
         // Find user
         const user = await User.findOne({ email });
         if (!user) {
@@ -58,7 +66,6 @@ const login = async (req, res) => {
                 message: "Invalid email or password."
             });
         }
-
         // Compare password
         const isMatch = await bcrypt.compare(password, user.password);
 
@@ -81,4 +88,8 @@ const login = async (req, res) => {
     }
 };
 
-module.exports = { signup, login };
+
+module.exports = {
+    signup,
+    login
+};

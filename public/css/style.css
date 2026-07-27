@@ -270,6 +270,7 @@ nav {
     justify-content: center;
     align-items: center;
     background: rgba(255, 255, 255, 0.1);
+    -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
 }
 
@@ -355,18 +356,6 @@ nav {
     border-color: #F79AB5;
 }
 
-.forgot-password {
-    text-align: right;
-    margin-top: -8px;
-}
-
-.forgot-password a {
-    text-decoration: none;
-    font-family: "Poppins", sans-serif;
-    font-size: 12px;
-    color: #5f5f5f;
-}
-
 .modal-btn {
     width: 100%;
     height: 50px;
@@ -448,3 +437,125 @@ nav {
     }
 }
 
+
+
+/* ==========================
+        TOAST
+========================== */
+.toast {
+    position: fixed;
+    top: 25px;
+    left: 50%;
+    transform: translate(-50%, -45px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    width: fit-content;
+    min-width: 260px;
+    max-width: 90vw;
+
+    padding: 16px 24px;
+
+    background: rgba(252, 231, 239, 0.92);
+    color: #4A3B3B;
+    border: 1px solid rgba(247, 143, 167, 0.35);
+    border-radius: 18px;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 15px;
+    text-align: center;
+
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.10);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition:
+        opacity .35s ease,
+        transform .35s ease;
+
+    z-index: 9999;
+}
+.toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+@media (max-width: 768px) {
+    .toast {
+        width: 90%;
+        min-width: auto;
+        padding: 14px 18px;
+        font-size: 14px;
+    }
+}
+
+.toast.success {
+    background: rgba(252,231,239,.92);
+    border:1px solid #F78FA7;
+    color:#4A3B3B;
+}
+.toast.error {
+    background: rgba(255,236,238,.95);
+    border:1px solid #ef5350;
+    color:#b71c1c;
+}
+.toast.warning {
+    background: rgba(255,248,225,.95);
+    border:1px solid #f9a825;
+    color:#8d6e00;
+}
+.toast.info{
+    background: rgba(232,245,255,.95);
+    border:1px solid #64b5f6;
+    color:#1565c0;
+}
+
+
+/* ==========================
+        BUTTON STATES
+========================== */
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+
+/* ==========================
+      PASSWORD TOGGLE
+========================== */
+.password-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.password-field input {
+    width: 100%;
+    height: 42px;
+    padding: 0 45px 0 18px;
+}
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #9b9b9b;
+    font-size: 15px;
+}
+.password-toggle:hover {
+    color: #F68FB1;
+}
+.password-toggle:focus {
+    outline: none;
+}

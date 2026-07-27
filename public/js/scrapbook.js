@@ -65,6 +65,15 @@ const pagePreview = document.getElementById("pagePreview");
 const imageUploadBox = document.querySelector(".image-upload-box");
 const coverImageInput = document.getElementById("coverImage");
 const uploadPlaceholder = document.getElementById("uploadPlaceholder");
+const descriptionCount = document.getElementById("descriptionCount");
+
+const deleteModal = document.getElementById("deleteModal");
+const cancelDelete = document.getElementById("cancelDelete");
+const confirmDelete = document.getElementById("confirmDelete");
+
+const logoutModal = document.getElementById("logoutModal");
+const cancelLogout = document.getElementById("cancelLogout");
+const confirmLogout = document.getElementById("confirmLogout");
 
 
 
@@ -85,8 +94,23 @@ let activeStickerData = null;
 let isDraggingSticker = false;
 let dragOffsetX = 0;
 let dragOffsetY = 0;
+let scrapbookToDelete = null;
 
 
+// =============================
+// AUTHENTICATION CHECK
+// =============================
+
+const userId = localStorage.getItem("userId");
+
+if (!userId) {
+    window.location.href = "/";
+}
+window.addEventListener("pageshow", () => {
+    if (!localStorage.getItem("userId")) {
+        window.location.href = "/";
+    }
+});
 
 // =============================
 // IMAGE PICKER
@@ -97,6 +121,21 @@ if (changeImageBtn) {
         coverImageInput.click();
     });
 }
+
+// =============================
+// DESCRIPTION COUNTER
+// =============================
+function updateDescriptionCounter() {
+    const length = scrapbookDescription.value.length;
+    descriptionCount.textContent = length;
+    if (length >= 280) {
+        descriptionCount.style.color = "#f86571";
+    } else {
+        descriptionCount.style.color = "";
+    }
+}
+scrapbookDescription.addEventListener("input", updateDescriptionCounter);
+
 
 // =============================
 // FRAME COLORS
@@ -130,7 +169,7 @@ function createBlankPage() {
 }
 
 // =============================
-// CREATE Sticker
+// CREATE STICKER
 // =============================
 
 function createStickerElement(stickerData) {
@@ -260,6 +299,7 @@ function createNewScrapbook() {
 
 function clearPageUI() {
     scrapbookDescription.value = "";
+    updateDescriptionCounter();
     coverImageInput.value = "";
     uploadPlaceholder.innerHTML = `
         <span class="plus">+</span>
@@ -295,6 +335,7 @@ function loadCurrentPage() {
         currentScrapbook.title;
     scrapbookDescription.value =
         page.description;
+    updateDescriptionCounter();
     selectedFrameColor =
         page.frameColor;
     stickersLayer.innerHTML = "";
@@ -360,7 +401,10 @@ function saveCurrentPage() {
 // =============================
 addPageBtn.addEventListener("click", () => {
     if (currentScrapbook.pages.length >= MAX_PAGES) {
-        alert("A scrapbook can have a maximum of 20 pages. 📖");
+        showToast(
+            "📖 A scrapbook can have a maximum of 20 pages.",
+            "warning"
+        );
         return;
     }
     saveCurrentPage();
@@ -396,7 +440,10 @@ nextPageBtn.addEventListener("click", () => {
 // =============================
 deletePageBtn.addEventListener("click", () => {
     if (currentScrapbook.pages.length === 1) {
-        alert("A scrapbook must have at least one page.");
+        showToast(
+            "📖 A scrapbook must have at least one page.",
+            "warning"
+        );
         return;
     }
     currentScrapbook.pages.splice(currentPageIndex, 1);
@@ -458,7 +505,6 @@ function updateDashboardState() {
 // =============================
 // CREATE DASHBOARD CARD
 // =============================
-
 function createScrapbookCard(scrapbook) {
 
     const card = document.createElement("div");
@@ -517,19 +563,10 @@ function createScrapbookCard(scrapbook) {
     });
 
 
-    deleteBtn.addEventListener("click", async (e) => {
+    deleteBtn.addEventListener("click", (e) => {
         e.stopPropagation();
-        if (!confirm("Delete this scrapbook?")) return;
-        try {
-            const response = await fetch(`/api/scrapbooks/${scrapbook._id}`, {
-                method: "DELETE"
-            });
-            const data = await response.json();
-            console.log(data);
-            await loadScrapbooks();
-        } catch (error) {
-            console.error(error);
-        }
+        scrapbookToDelete = scrapbook;
+        openModal(deleteModal);
     });
 
     scrapbook.card = card;
@@ -544,15 +581,24 @@ function createScrapbookCard(scrapbook) {
 
 saveScrapbook.addEventListener("click", async () => {
     const title = scrapbookTitle.value.trim();
+    setButtonLoading(saveScrapbook, "💾 Saving...");
     if (title === "") {
-        alert("Your scrapbook needs a title before you can save it. 💖");
+        showToast(
+            "💖 Please give your scrapbook a title.",
+            "warning"
+        );
         scrapbookTitle.focus();
+        resetButton(saveScrapbook);
         return;
     }
 
     const page = currentScrapbook.pages[currentPageIndex];
     if (!page.coverImage && !pendingImage) {
-        alert("Please add a cover image before saving your scrapbook. 🖼️💖");
+        showToast(
+            "🖼️ Please add a cover image before saving.",
+            "warning"
+        );
+        resetButton(saveScrapbook);
         return;
     }
 
@@ -589,30 +635,26 @@ saveScrapbook.addEventListener("click", async () => {
         }
 
         const data = await response.json();
-        console.log(data);
+        if (!response.ok) {
+            showToast(data.message, "error");
+            resetButton(saveScrapbook);
+            return;
+        }
         await loadScrapbooks();
         updateDashboardState();
+        resetButton(saveScrapbook);
         closeModal(scrapbookModal);
+        showToast("💖 Scrapbook saved successfully!", "success");
 
     } catch (error) {
         console.error(error);
+        showToast(
+            "❌ Failed to save scrapbook.",
+            "error"
+        );
+        resetButton(saveScrapbook);
     }
 
-
-    // if (!isEditing) {
-    //     scrapbooks.push(currentScrapbook);
-    //     const card = createScrapbookCard(currentScrapbook);
-    //     scrapbooksGrid.appendChild(card);
-    // }
-
-    // else {
-    //     currentScrapbook.card.querySelector("h3").textContent =
-    //         currentScrapbook.title;
-    //     currentScrapbook.card.querySelector("p").textContent =
-    //         `${currentScrapbook.pages.length} pages`;
-    //     currentScrapbook.card.querySelector("img").src =
-    //         currentScrapbook.pages[0].coverImage;
-    // }
 });
 
 // =============================
@@ -658,6 +700,58 @@ if (coverImageInput && uploadPlaceholder) {
 }
 
 
+
+cancelDelete.addEventListener("click", () => {
+    closeModal(deleteModal); 
+    scrapbookToDelete = null;
+});
+
+
+confirmDelete.addEventListener("click", async () => {
+    if (!scrapbookToDelete) return;
+    setButtonLoading(confirmDelete, "Deleting...");
+    try {
+        const response = await fetch(
+            `/api/scrapbooks/${scrapbookToDelete._id}`,
+            {
+                method: "DELETE"
+            }
+        );
+        const data = await response.json();
+        if (!response.ok) {
+            showToast(data.message, "error");
+            return;
+        }
+        closeModal(deleteModal);
+        scrapbookToDelete = null;
+        resetButton(confirmDelete);
+        await loadScrapbooks();
+        updateDashboardState();
+        showToast("🗑️ Scrapbook deleted successfully!", "success");
+    } catch (error) {
+        console.error(error);
+        resetButton(confirmDelete);
+        showToast(
+            "❌ Failed to delete scrapbook.",
+            "error"
+        );
+    }
+});
+
+
+
+
+deleteModal.addEventListener("click", (e) => {
+    if (e.target === deleteModal) {
+        closeModal(deleteModal);
+        scrapbookToDelete = null;
+    }
+});
+
+
+
+
+
 async function loadScrapbooks() {
     try {
         const userId = localStorage.getItem("userId");
@@ -667,8 +761,6 @@ async function loadScrapbooks() {
         scrapbooks.length = 0;
         scrapbooksGrid.innerHTML = "";
         data.forEach(scrapbook => {
-
-            console.log("Loaded scrapbook:", scrapbook);
 
             scrapbooks.push(scrapbook);
 
@@ -682,3 +774,39 @@ async function loadScrapbooks() {
     }
 }
 loadScrapbooks();
+
+
+const username = localStorage.getItem("username");
+if (username) {
+    document.getElementById("welcomeUser").textContent =
+        `Hello, ${username} 🩷`;
+    if (localStorage.getItem("justLoggedIn") === "true") {
+        showToast(`💖 Welcome back, ${username}!`, "success");
+        localStorage.removeItem("justLoggedIn");
+    }
+}
+
+
+const logoutBtn = document.getElementById("logoutBtn");
+logoutBtn.addEventListener("click", () => {
+    openModal(logoutModal);
+});
+
+
+cancelLogout.addEventListener("click", () => {
+    closeModal(logoutModal);
+    // resetButton(confirmLogout);
+});
+
+logoutModal.addEventListener("click", (e) => {
+    if (e.target === logoutModal) {
+        closeModal(logoutModal);
+        // resetButton(confirmLogout);
+    }
+});
+
+confirmLogout.addEventListener("click", () => {
+    setButtonLoading(confirmLogout, "Logging out...");
+    localStorage.clear();
+    window.location.href = "/";
+});
