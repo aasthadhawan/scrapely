@@ -164,6 +164,6 @@ CLOUDINARY_URL=your_cloudinary_url
 
 ## 👩‍💻 Author
 
-**Aastha Dhawan**
+**Aastha Dhawan🩷**
 
 Built as part of the *Java and Web Development* module at **IU International University of Applied Sciences**.
