@@ -130,26 +130,6 @@ CLOUDINARY_URL=your_cloudinary_url
 
 ---
 
-## 📸 Screenshots
-
-### Landing Page
-
-*(Add screenshot here)*
-
-### Dashboard
-
-*(Add screenshot here)*
-
-### Scrapbook Editor
-
-*(Add screenshot here)*
-
-### Responsive Design
-
-*(Add screenshot here)*
-
----
-
 ## 🔮 Future Improvements
 
 - Password reset functionality
